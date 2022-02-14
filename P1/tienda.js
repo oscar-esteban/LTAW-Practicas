@@ -30,10 +30,10 @@ const server = http.createServer((req, res) => {
   console.log("Página solicitada: " + filename
   )
 
-  content = page.split(".").pop()
+  content = filename.split(".").pop()
   console.log("Contenido de la página: " + content);
 
-  fs.readFile(page, (err, data) => {
+  fs.readFile(filename, (err, data) => {
   let code = 200;
   let code_msg = "OK";
   let content_type = "text/html";
