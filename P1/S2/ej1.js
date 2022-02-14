@@ -5,4 +5,6 @@
    desde node.js, sin tener que importar nada */
 
 //-- Imprimir un mensaje en la consola
-console.log("¡Hola Mundo!");ssssssfsd
+console.log("¡Hola Mundo!");
+
+//-- $ node ej1.js 
