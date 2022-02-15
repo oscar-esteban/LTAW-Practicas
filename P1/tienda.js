@@ -1,34 +1,24 @@
 const http = require('http');
 const fs = require('fs');
-
-//-- Definir el puerto a utilizar
 const PUERTO = 9090;
 
 //-- Crear el servidor
 const server = http.createServer((req, res) => {
-    
-  //-- Indicamos que se ha recibido una petición
   console.log("Petición recibida!");
-
   //-- Crear el objeto URL del mensaje de solitud (req)
   //-- y coger el recurso (url)
   const myURL = new URL(req.url, 'http://' + req.headers['host']);
   console.log("URL solicitada: " + myURL.pathname);
 
-  //-- Definir la variable fichero
   let filename = "";
-
   //-- Obtener la ruta (pathname)
   //-- Comprobar si la ruta es elemento raiz
   //-- Obtener fichero a devolver
-  if (myURL.pathname == "/"){
-    filename += "tienda.html";  //-- Abrir la pagina principal
-  }else{
-    filename += myURL.pathname.substr(1);  //-- Abrir el fichero solicitado
-  }
-
-  console.log("Página solicitada: " + filename
-  )
+  if (myURL.pathname == "/") { //-- Cuando lanzamos nuestra página web
+    filename = './tienda.html'
+} else { // -- En cualquier otro caso
+    filename = '.' + myURL.pathname;
+}
 
   content = filename.split(".").pop()
   console.log("Contenido de la página: " + content);
@@ -62,6 +52,4 @@ const server = http.createServer((req, res) => {
   res.end();
   });  
 });
-
-//-- Activar el servidor: ¡Que empiece la fiesta!
 server.listen(PUERTO);
