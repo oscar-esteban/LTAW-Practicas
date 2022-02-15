@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const PUERTO = 9090;
-
+console.log("Escuchando...");
 //-- Crear el servidor
 const server = http.createServer((req, res) => {
   console.log("Petición recibida!");
