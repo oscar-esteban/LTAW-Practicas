@@ -1,0 +1,11 @@
+body{
+    background-image: url(fondopg);
+    background-size: cover;
+}
+#Barra{
+    text-align:center;
+    background-color:rgba(255, 255, 255, 0.493);
+    margin: 20px 100px 20px 100px;
+    border-width: 3px;
+    border-radius: 60px;
+}
