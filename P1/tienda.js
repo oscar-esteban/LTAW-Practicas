@@ -16,9 +16,11 @@ const server = http.createServer((req, res) => {
   //-- Obtener fichero a devolver
   if (myURL.pathname == "/") { //-- Cuando lanzamos nuestra página web
     filename = './tienda.html'
-} else { // -- En cualquier otro caso
+  }else if(myURL.pathname == "/favicon.icon"){
+    filename = './tuliman.jpg'
+  }else{ // -- En cualquier otro caso
     filename = '.' + myURL.pathname;
-}
+  }
 
   content = filename.split(".").pop()
   console.log("Contenido de la página: " + content);
@@ -26,8 +28,7 @@ const server = http.createServer((req, res) => {
   fs.readFile(filename, (err, data) => {
     let code = 200;
     let code_msg = "OK";
-    let content_type = "text/html";
-
+    let content_type = "text/"+content;
     if (err) { // Mostramos la página de error
         console.log('ha habido error')
         var HOME_HTML = fs.readFileSync('./error.html', 'utf-8');
@@ -37,7 +38,7 @@ const server = http.createServer((req, res) => {
         res.write(HOME_HTML);
         return res.end();
     }
-    content_type = "text/"+content; //clave
+    
 
     console.log(content_type)
     res.statusCode = code;
