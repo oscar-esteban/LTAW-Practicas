@@ -24,32 +24,27 @@ const server = http.createServer((req, res) => {
   console.log("Contenido de la página: " + content);
 
   fs.readFile(filename, (err, data) => {
-  let code = 200;
-  let code_msg = "OK";
-  let content_type = "text/html";
+    let code = 200;
+    let code_msg = "OK";
+    let content_type = "text/html";
 
-  if (err) { // Mostramos la página de error
-      console.log('ha habido error')
-      var HOME_HTML = fs.readFileSync('./error.html', 'utf-8');
-      res.statusCode = 404;
-      res.statusMessage = "Ha habido un error";
-      res.setHeader('Content-Type', "text/html");
-      res.write(HOME_HTML);
-      return res.end();
-  }
-  switch (content) {
-      case 'html':
-          content_type = "text/html";
-      case 'css':
-          content_type = "text/css";
-      default:
-          content_type = content;
-  } 
-  res.statusCode = code;
-  res.statusMessage = code_msg;
-  res.setHeader('Content-Type', content_type);
-  res.write(data);
-  res.end();
+    if (err) { // Mostramos la página de error
+        console.log('ha habido error')
+        var HOME_HTML = fs.readFileSync('./error.html', 'utf-8');
+        res.statusCode = 404;
+        res.statusMessage = "Ha habido un error";
+        res.setHeader('Content-Type', "text/html");
+        res.write(HOME_HTML);
+        return res.end();
+    }
+    content_type = "text/"+content; //clave
+
+    console.log(content_type)
+    res.statusCode = code;
+    res.statusMessage = code_msg;
+    res.setHeader('Content-Type', content_type);
+    res.write(data);
+    res.end();
   });  
 });
 server.listen(PUERTO);
