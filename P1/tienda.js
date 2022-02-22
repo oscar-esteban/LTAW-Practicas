@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
   if (myURL.pathname == "/") { //-- Cuando lanzamos nuestra página web
     filename = './tienda.html'
   }else if(myURL.pathname == "/favicon.icon"){
-    filename = './tuliman.jpg'
+    filename = './tulipan.jpg'
   }else{ // -- En cualquier otro caso
     filename = '.' + myURL.pathname;
   }
