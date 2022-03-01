@@ -4,7 +4,7 @@
 const fs = require('fs');
 
 //-- Npmbre del fichero JSON a leer
-const FICHERO_JSON = "Ej-03-tienda-json-fich.json"
+const FICHERO_JSON = "ejemp3.json"
 
 //-- Leer el fichero JSON
 const  tienda_json = fs.readFileSync(FICHERO_JSON);
