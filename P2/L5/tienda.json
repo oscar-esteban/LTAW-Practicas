@@ -1,0 +1,20 @@
+    {
+      "productos": [
+        {
+            "nombre": "patata",
+            "contador": 10,
+            "precio": 5
+        },{}
+      ],
+      "clientes": {
+          "cliente1": "Sara",
+          "cliente2": "Lourdes"
+      },
+      "pedidos": {
+          "pedido1": {
+              "elemento1" : "patata",
+              "elemento2" : "pimiento"
+          }
+      }
+
+    }
