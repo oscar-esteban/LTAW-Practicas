@@ -11,6 +11,8 @@ const  tienda_json = fs.readFileSync(FICHERO_JSON);
 //-- Crear la estructura tienda a partir del contenido del fichero
 const tienda = JSON.parse(tienda_json);
 
+const tienda2 = "tienda2.json"
+
 //-- Cargar pagina web del formulario
 const FORMULARIO = fs.readFileSync('form1.html','utf-8');
 
@@ -29,7 +31,13 @@ const server = http.createServer((req, res) => {
   console.log("Recurso: " + req.url);
   console.log("  Ruta: " + myURL.pathname);
   console.log("  Parametros: " + myURL.searchParams);
-
+  
+    
+    tienda.clientes["cliente3"] = nombre;
+  
+  console.log(tienda["clientes"]);
+  let myJSON = JSON.stringify(tienda);
+  fs.writeFileSync(tienda2, myJSON);
   //-- Por defecto entregar formulario
   let content_type = "text/html";
   let content = FORMULARIO;
