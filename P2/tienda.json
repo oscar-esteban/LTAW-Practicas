@@ -1,0 +1,24 @@
+    {
+      "usuarios": [
+        {
+            "nombre": "admin",
+            "correo": "admin@correo.es"
+        },
+        {
+          "nombre": "prueba",
+          "correo": "prueba@correo.es"
+      }
+      ],
+      "productos": [
+          {"nombre": "tulipan", "precio": 10, "cantidad": 7, "descripcion": "Flor tuli"},
+          {"nombre": "clavel", "precio": 15, "cantidad": 4, "descripcion": "Flor clav"},
+          {"nombre": "violeta", "precio": 7, "cantidad": 12, "descripcion": "Flor violet"}
+        ],
+      "pedidos": [
+        {"nombre": "oscar",
+          "direccion": "calle mayor", 
+          "numeroTarjeta": "40540999",
+           "productos": "tulipan clavel"}
+      ]
+      }
+
