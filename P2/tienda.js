@@ -16,7 +16,7 @@ const tienda2 = "tienda2.json"
 //-- Cargar pagina web del formulario
 const FORMULARIO = fs.readFileSync('form1.html','utf-8');
 //-- HTML de la página de respuesta
-const RESPUESTA = fs.readFileSync('form1-resp.html', 'utf-8');
+const RESPUESTA = fs.readFileSync('pagina1/tienda.html', 'utf-8');
 
 
 //-- SERVIDOR: Bucle principal de atención a clientes
