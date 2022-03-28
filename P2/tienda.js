@@ -32,23 +32,47 @@ const server = http.createServer((req, res) => {
   console.log("  Ruta: " + myURL.pathname);
   console.log("  Parametros: " + myURL.searchParams);
   
-    if (nombre == tienda.usuarios[0].nombre || nombre == tienda.usuarios[1].nombre){//comprobar si esta en lista
-      console.log("Usuario aceptado");
-    }
-      //tienda.usuarios.push({nombre,correo});
+  let page = ""; //pagina que queremos cargar.
   
-  console.log(tienda["usuarios"]);
   let myJSON = JSON.stringify(tienda);
   fs.writeFileSync(tienda2, myJSON);
   //-- Por defecto entregar formulario
   let content_type = "text/html";
   let content = FORMULARIO;
 
-  if (myURL.pathname == '/procesar') {
+  if (myURL.pathname == '/procesar') { // 1OSCAR
+    let nombre = myURL.searchParams.get('nombre'); 
+    let correo = myURL.searchParams.get('correo');
       content_type = "text/html";
       content = RESPUESTA;
+      let userExist = false;
+        for (i = 0; i < tienda.usuarios.length; i++) {
+            if (nombre == tienda.usuarios[i].nombre && password == tienda.usuarios[i].correo) {
+                userExist = true
+            }
+        }
+      if (userExist == true) {
+        //-- Asignar la cookie de usuario 
+        res.setHeader('Set-Cookie', "user=" + nombre);
+        page = './login-success.html'
+    } else {
+        page = './login-fail.html'
+    } 
   }
 
+  switch (page) {
+    case './home.html':
+      console.log("oo");
+      break;
+    case './login-success.html':
+      console.log("ee");
+      break;
+    case './login-fail.html':
+      console.log("aa");
+      break;
+  }
+
+//
   //-- Si hay datos en el cuerpo, se imprimen
   req.on('data', (cuerpo) => {
 
