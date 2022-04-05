@@ -19,6 +19,9 @@
           "direccion": "calle mayor", 
           "numeroTarjeta": "40540999",
            "productos":["tulipan", "clavel"] }
-      ]
+      ],
+      "lista": [
+        "tulpian", "clavel", "violeta"
+    ]
       }
 
