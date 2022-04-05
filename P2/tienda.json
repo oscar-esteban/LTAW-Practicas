@@ -18,7 +18,7 @@
         {"nombre": "oscar",
           "direccion": "calle mayor", 
           "numeroTarjeta": "40540999",
-           "productos": "tulipan clavel"}
+           "productos":["tulipan", "clavel"] }
       ]
       }
 
