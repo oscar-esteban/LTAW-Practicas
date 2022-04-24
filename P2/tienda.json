@@ -1,27 +1,15 @@
-    {
-      "usuarios": [
-        {
-            "nombre": "admin",
-            "correo": "admin@correo.es"
-        },
-        {
-          "nombre": "prueba",
-          "correo": "prueba@correo.es"
-      }
-      ],
-      "productos": [
-          {"nombre": "tulipan", "precio": 10, "cantidad": 7, "descripcion": "Flor tuli"},
-          {"nombre": "clavel", "precio": 15, "cantidad": 4, "descripcion": "Flor clav"},
-          {"nombre": "violeta", "precio": 7, "cantidad": 12, "descripcion": "Flor violet"}
-        ],
-      "pedidos": [
-        {"nombre": "oscar",
-          "direccion": "calle mayor", 
-          "numeroTarjeta": "40540999",
-           "productos":["tulipan", "clavel"] }
-      ],
-      "lista": [
-        "tulpian", "clavel", "violeta"
-    ]
-      }
 
+
+{
+  "productos":[
+  {"nombre":"camiseta Goku","descripcion":"Un gran guerrero de esta magnifica raza que se precie debe tener su ropa rasgada, al menos la parte de arriba de esta por lo tanto este camiseton te viene al pelo, y si estas calvo, te viene como un guante, tu ya me entiendes, al ponertela sentiras la fuerza de esta formidable raza corriendo por tus venas mientras te comes unos ganchitos y una cerveza porque seamos sinceros, por mucho que tengas la fuerza de poder de mas de 9000 no vas a ir al gym, pero al menos vestiras como si fueras por el modico precio de 15.78 zenis.","stock":13,"precio":15.78},
+  {"nombre":"radar bulma","descripcion":"Si los otros dos articulos no te han interesado, ¿qué te parecería cumplir cualquier deseo que tuvieses?, con el plus claro está de que el deseo te lo cumpla un super dragón mágico verde de 150 metros de altura y que habla sin mover la boca, eso es un sueño para todos lo sé, pues con este radar podrías hacerlo realidad buscando las esferas del dragón, claro no te las iba a vender yo, te ayudo pero te hago buscarlas por ti mismo, soy cruel pero justo, y por un precio de 25.97 zenis, no te lo pierdas!.","stock":16,"precio":25.97},
+  {"nombre":"one piece","descripcion":"Pues sí, está a la venta el one piece, el tesoro mas codiciado del mundo, el que hara que te conviertas en el rey de los piratas el tesoro que todo el mundo anda buscando y que lleva casi 1000 capitulos de anime y mas de 1000 de manga sin ser encontrado, pues tu por solo 5 billones de berris lo puedes tener a mano, eso sí, yo no se lo que és, tu tampoco lo sabes y de hecho nadie lo sabe, por lo tanto tú compralo y te llegara algo a casa, cualquier cosa, ya se me ocurrirá que enviarte, podria ser algo guay o una simple nota diciendo que has desperdiciado billones de berris y ahora estoy huyendo a raftel con una nueva identidad, no se prueba suerte.","stock":1,"precio":5000000000000}],
+  
+  "usuarios":[
+    {"nombre":"shiro twin","nombre real":"sting","correo":"mastersting@saber.com"},
+    {"nombre":"root","nombre real":"admin","correo":"gestion@animas.com"}],
+    
+    "pedidos":[
+      {"usuario":"shiro twin","direccion":"edificio saber, magnolia 23098","tarjeta":"1111222233334444","compra":["figura Laxus","sudadera Gray"]},{"usuario":"kuro twin","direccion":"edificio fairy tail, magnolia 23002","tarjeta":"6666777788889999","compra":["figura laxus"]}]
+    }
