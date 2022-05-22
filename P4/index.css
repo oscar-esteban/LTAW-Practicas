@@ -1,0 +1,66 @@
+@font-face {
+    font-family: Arial Black;
+    src: url(ariblk.ttf);
+}
+
+@font-face {
+    font-family: Arial ;
+    src: url(arial.ttf);
+}
+
+body {
+    /*background-color: aqua;*/
+    background-image: url('fondoE.jpg');
+    background-size: contain;
+    font-family: Arial;
+}
+
+h1{
+    text-align: center;
+    font-family: Arial Black;
+}
+
+#izquierda{
+    float:left;
+    width: 40%;
+    padding: 15px;
+    background-color: #d3fbc6d8;
+    border: 2px solid #000000;
+    height: 700px;
+    overflow: auto;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    margin-left: 2%;
+}
+
+#derecha{
+    float:right;
+    width: 40%;        
+    padding: 15px;
+    background-color: #d3fbc6d8;
+    border: 2px solid #000000;
+    height: 700px;
+    overflow: auto;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    margin-left: 2%;
+}
+
+#btn_test{
+    float: center;
+    width: 100px;
+    height: 45px;
+    border-radius: 5px;
+    margin-left: 10px;
+    box-shadow: 2px 2px 2px rgb(104, 107, 145);
+}
+
+#btn_test:hover{
+    background-color: #a4a8f4ce;
+}
+
+#display{
+    background-color: #a4a8f4ce;
+    padding: 10px 20px;
+    border-radius: 5px;
+}

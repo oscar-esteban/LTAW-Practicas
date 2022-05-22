@@ -1,143 +1,188 @@
-//-- Cargar las dependencias
-const socket = require('socket.io');
-const http = require('http');
-const express = require('express');
-const colors = require('colors');
-const ip = require('ip');
-const fs = require('fs');
-
-let users = 0; // Contador con el número de usuarios conectados al chat
-
-const PUERTO = 9000; // Puerto donde escuchamos
-
-//-- Crear una nueva aplciacion web
-const app = express();
-
-//-- Crear un servidor, asosiaco a la App de express
-const server = http.Server(app);
-
-//-- Crear el servidor de websockets, asociado al servidor http
-const io = socket(server);
-
-//-------- PUNTOS DE ENTRADA DE LA APLICACION WEB
-//-- Página de registro de acceso al chat
-app.get('/', (req, res) => {
-    res.send(fs.readFileSync('./public/home.html', 'utf-8'));
-});
-
-// -- Acceso al chat
-app.get('/procesar', (req, res) => {
-    res.send(fs.readFileSync('./public/chat.html', 'utf-8'));
-});
-
-//-- Esto es necesario para que el servidor le envíe al cliente la
-//-- biblioteca socket.io para el cliente
-app.use('/', express.static(__dirname + '/'));
-
-//-- El directorio publico contiene ficheros estáticos
-app.use(express.static('public'));
+// chat del server js
 
 //-- Cargar el módulo de electron
 const electron = require('electron');
 
-console.log("Arrancando electron...");
-const url = 'http://' + ip.address() + ':' + PUERTO + '/public/home.html';
+const { createSocket } = require('dgram');
+const express = require('express');
+const fs = require('fs');
+// app web vacía
+const app = express()
+const http = require('http').Server(app);
+//-- Crear el servidor de websockets, asociado al servidor http
+const io = require('socket.io')(http);
 
-//-- Variable para acceder a la ventana principal
-//-- Se pone aquí para que sea global al módulo principal
-let win = null;
+const ip = require('ip');
+
+//-- Contador de usuarios
+let cont_user = 0;
+
+//ficher¡
+const Fichero_Usuarios = "chat.json";
+let Usuarios = [];
+//-- Definir el puerto a utilizar
+const PUERTO = 8080;
+
+//-- Function fecha
+function date(){
+    var hoy = new Date();
+    var dd = hoy.getDate();
+    var mm = hoy.getMonth() + 1; //si no le sumo 1 sale un mes menos idk
+    var yyyy = hoy.getFullYear();
+    var h = hoy.getHours();
+    var m = hoy.getMinutes();
+    return dd+'/'+mm+'/'+yyyy+' --> '+ h+':'+m;
+}
+
+io.on('connect', (socket) => {
+    console.log('conectado');
+});
+
+
+//-- PUNTOS DE ENTRADA DE LA APLICACION WEB
+//-- Defino el punto de entrada principal de mi aplicación web
+app.get('/', (req, res) => {
+    let path = __dirname + '/chat.html';
+    res.sendFile(path);
+    console.log("Acceso a " + path);
+  });
+
+
+//-- El resto de peticiones como ficheros estáticos
+app.use('/', express.static(__dirname +'/'));
+
+
+io.on('connection', function(socket){
+    //-- Usuario conectado. Imprimir el identificador de su socket
+    console.log('--> Usuario conectado!. Socket id: ' + socket.id);
+
+    //-- Sumamos uno al contador 
+    cont_user += 1;
+
+    //-- enviar numero usuarios conectados
+    win.webContents.send('usuarios', cont_user);
+
+    //-- Usuario conectado. Imprimir el identificador de su socket
+    console.log('--> Usuario conectado!. Socket id: ' + socket.id);
+    //-- Mostrar cunado se conecta un usuario
+    io.emit('conect', '--> Usuario conectado!. Número: ' + cont_user);
+
+    let datos = {
+      id_usuario: socket.id,
+      numero_usuario: cont_user.toString(),
+    }
+
+    Usuarios.push(datos);
+    let data = JSON.stringify(Usuarios);
+    fs.writeFileSync(Fichero_Usuarios, data);
+    
+    socket.emit('hello', "Eres el usuario numero: " + cont_user);
+
+    //-- Retrollamada de mensaje recibido del cliente
+    socket.on('msg', (msg) => {
+      console.log("Cliente: " + socket.id + ': ' + msg);
+
+      for (let  i= 0; i < Usuarios.length; i++){
+        if (Usuarios[i]["id_usuario"].includes(socket.id)){
+          numero = Usuarios[i]["numero_usuario"];
+        }
+      }
+
+      //-- Enviar el mensaje a clientes conectados
+      if (msg.value == ' '){
+        console.log("entra?")
+        msg.value = "";
+      }else{
+        io.emit('msg', numero + ": " + msg);
+      }
+ 
+    });
+
+    //-- Usuario desconectado. Imprimir el identificador de su socket
+    socket.on('disconnect', function(){
+        console.log('--> Usuario Desconectado. Socket id: ' + socket.id);
+        for (let  i= 0; i < Usuarios.length; i++){
+          if (Usuarios[i]["id_usuario"].includes(socket.id)){
+            numero = Usuarios[i]["numero_usuario"];
+          }
+        }
+        io.emit('desconecto', "--> Usuario numero " + numero + " desconectado!");
+        //Restamos uno al contador de usuarios
+        if (cont_user > 0){
+            cont_user = cont_user - 1;
+            console.log("--> Número de usuarios: " + cont_user);
+        };
+    }); 
+    
+    // recivo zumbido 
+    socket.on('zumbido', () => {
+      io.emit('zumbidoRecived', 'Estas recibiendo un zumbido')
+    });
+
+
+    socket.on('cmd', (msg) => {
+        console.log("Cliente: " + socket.id + ': ' + msg);
+    
+        if(msg =='/help'){
+          socket.emit('cmd', " Comandos posibles: /help , /list, /hello, /date ");
+        }else if (msg =='/list') {
+          console.log(Usuarios);
+          socket.emit('cmd', " Tenemos " + cont_user + " usuarios conectados en el chat "  );
+        }else if (msg =='/hello') {
+          socket.emit('cmd', "Hola compañero, espero que todo te vaya genial :)");
+        }else if (msg =='/date') {
+            socket.emit('cmd', 'Hoy es: ' + date());
+        }else {
+          socket.emit('cmd', " Comando Erroneo: ejecute /help para ver los comandos permitidos ");
+        }
+      })
+});
+
+console.log("Arrancando electron...");
 
 //-- Punto de entrada. En cuanto electron está listo,
 //-- ejecuta esta función
 electron.app.on('ready', () => {
-    console.log("Evento Ready!");
-
+    console.log("Evento Ready!");   
+  
     //-- Crear la ventana principal de nuestra aplicación
     win = new electron.BrowserWindow({
-        width: 800, //-- Anchura 
-        height: 800, //-- Altura
+      width: 700,  //-- Anchura 
+      height: 400,  //-- Altura
 
-        //-- Permitir que la ventana tenga ACCESO AL SISTEMA
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
-        }
+       //-- Permitir que la ventana tenga ACCESO AL SISTEMA
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false
+      }
+
     });
 
-    //-- Cargar interfaz gráfica en HTML
+     //-- Para quitar menu por defecto de la parte superior 
+    //win.setMenuBarVisibility(false)
+
+    //-- Cargar contenido web en la ventana
+    //-- La ventana es en realidad.... ¡un navegador!
     win.loadFile("index.html");
-    win.webContents.send('users', users);
-    win.webContents.send('url', url);
-});
 
-//------------------- GESTION SOCKETS IO
-//-- Evento: Nueva conexion recibida
-io.on('connect', (socket) => {
-
-    users += 1;
-    win.webContents.send('users', users);
-
-    console.log('** NUEVA CONEXIÓN **'.yellow);
-    io.send('Nuevo usuario conectado');
-    win.webContents.send('message', 'Nuevo usuario conectado');
-    socket.send('Bienvenid@ al chat de Nacho :)');
-    //-- Evento de desconexión
-    socket.on('disconnect', function() {
-        users -= 1;
-        //-- Enviar numero de usuarios al renderer
-        win.webContents.send('users', users);
-        console.log('** CONEXIÓN TERMINADA **'.yellow);
-        io.send('Usuario desconectado');
-        win.webContents.send('message', 'Usuario desconectado');
+    win.on('ready-to-show', () => {
+      win.webContents.send('ip', 'http://' + ip.address() + ':' + PUERTO);
     });
+  });
 
-    //-- Mensaje recibido
-    socket.on("message", (msg) => {
-        // -- Comprobamos si es un comando
-        if (msg.split(': ')[1].startsWith('/')) {
-            switch (msg.split(': ')[1]) {
-                case '/help':
-                    socket.send('Estos son los comandos disponibles en la sala de chat:<br> /help: Donde se encuentra ahora, se muestra un menú con las posibles opciones del chat.<br> /list: Se mostrará el número de usuarios conectados al chat.<br> /hello: El chat le devolverá el saludo.<br> /date: Se mostrará la fecha actual.' + users);
-                    break;
-                case '/list':
-                    socket.send('Usuarios conectados: ' + users);
-                    break;
-                case '/hello':
-                    socket.send('Hola! Espero que estés teniendo una agradable conversación!');
-                    break;
-                case '/date':
-                    var currentdate = new Date();
-                    var datetime = "Hoy es " + currentdate.getDate() + "/" +
-                        (currentdate.getMonth() + 1) + "/" +
-                        currentdate.getFullYear() + " y son las " +
-                        currentdate.getHours() + ":" +
-                        currentdate.getMinutes() + ":" +
-                        currentdate.getSeconds();
-                    socket.send(datetime);
-                    break;
-                default:
-                    // No hacer nada, tampoco se reenvía el mensaje.
-                    break;
-            }
-        } else {
-            console.log("Mensaje Recibido!: " + msg.blue);
-            //-- Reenviarlo a todos los clientes conectados
-            io.send(msg);
-            win.webContents.send('message', msg);
-        }
-
-    });
-
-});
-
-//-- Lanzar el servidor HTTP
-server.listen(PUERTO);
-console.log("Escuchando en puerto: " + PUERTO);
-
-//-- Esperar a recibir los mensajes de botón apretado (Test) del proceso de 
-//-- renderizado. Al recibirlos se escribe una cadena en la consola
-electron.ipcMain.handle('test', (event, msg) => {
+  //-- Esperar a recibir los mensajes de botón apretado (Test) del proceso de 
+  //-- renderizado. Al recibirlos se escribe una cadena en la consola
+  electron.ipcMain.handle('test', (event, msg) => {
     console.log("-> Mensaje: " + msg);
-    // Reenviar a todos los usuarios del chat
+    //-- Enviar mensaje de prueba
     io.send(msg);
+    win.webContents.send('msg', msg);
+
+  });
+
+//-- Lanzar servidor
+http.listen(PUERTO, function(){
+  console.log('Servidor lanzado en puerto ' + PUERTO);
 });
+//-- Mensaje de arranque
+console.log("Arrancando servidor...");

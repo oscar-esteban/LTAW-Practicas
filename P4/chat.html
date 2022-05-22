@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang = "en" dir = "ltr">
+    <head>
+
+        <meta charset = "utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CHAT</title>
+        <!-- meto la hoja de estilo-->
+        <link rel="stylesheet" href="chat.css">
+        <link rel="icon" href="icono.png">
+        <!-- Cargar la biblioteca Socket.IO. Nos la debe entregar el servidor -->
+        <script src="/socket.io/socket.io.js"></script>
+        <!-- Cliente que usa los Sockets.io-->
+        <script src="chat-client.js" defer></script>
+
+    </head> 
+
+    <body>
+        <div class="cabecera">
+            <h1>WINDOWS LIVE!</h1>
+          </div>
+          <div class="centro">
+            <div class="chat">
+              <h3>MESSENGER</h3>
+              <p id="wellcome">Bienvenido al Chat Windows Live Messenger</p>
+              <p id="display"></p>
+            </div>
+            <div class="writing">
+              
+              <table class="botones">
+                <tr>
+                  <th><input type="text" size="80" style="height:30px" id="msg" autocomplete="off" /></th>
+                  <th><button type="button" id="enviar">ENVIAR</button></th>
+                </tr>
+                <tr>
+                  
+                  <th><button type="button" id="zumbido">ENVIAR ZUMBIDO</button></th>
+                </tr>
+                
+            </div>
+          </div>
+    
+    </body>

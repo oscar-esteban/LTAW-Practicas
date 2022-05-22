@@ -1,0 +1,75 @@
+/*hoja de estilo del chat*/
+@font-face {
+    font-family: Arial Black;
+    src: url(ariblk.ttf);
+}
+
+@font-face {
+    font-family: Arial ;
+    src: url(arial.ttf);
+}
+
+body {
+    /*background-color: aqua;*/
+    background-image: url('fondo.png');
+    background-size: cover;
+    font-family: Arial;
+}
+
+.cabecera{
+    text-align: center;
+}
+
+h1{
+    text-align: center;
+    font-family: Arial Black;
+}
+
+h3{
+    text-align: center;
+}
+
+#wellcome{ 
+    text-align: center;
+}
+
+.writing{
+    
+    background-color: #d3fbc6d8;
+    padding: 10px 20px;
+    /*border: 5px solid #fb5000;*/
+    border-radius: 3px;
+
+}
+
+#msg { /* display donde escribimos el mensaje*/
+    
+    width: 650px;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 1%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    resize: none;
+}
+
+#enviar {
+    width: 100px;
+    height: 45px;
+    border-radius: 5px;
+    margin-left: 10px;
+    box-shadow: 2px 2px 2px rgb(104, 107, 145);
+}
+
+#zumbido {
+    width: 200px;
+    height: 45px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgb(104, 107, 145);
+}
+
+#display{ /* donde aparecen los mensajes*/
+    background-color: #a4a8f4ce;
+    padding: 10px 20px;
+    border-radius: 5px;
+}

@@ -1,50 +1,50 @@
 const electron = require('electron');
-
-console.log("Hola desde el proceso de la web...");
+const ip = require('ip');
 
 //-- Obtener elementos de la interfaz
-const btn_test = document.getElementById("btn_test");
-const display = document.getElementById("display");
 const info1 = document.getElementById("info1");
 const info2 = document.getElementById("info2");
 const info3 = document.getElementById("info3");
 const info4 = document.getElementById("info4");
-const info5 = document.getElementById("info5");
-const info6 = document.getElementById("info6");
-const info7 = document.getElementById("info7");
-const URL = document.getElementById("URL");
-const QR = document.getElementById("QR");
-const print = document.getElementById("print");
+const usuarios = document.getElementById("usuarios");
+const btn_test = document.getElementById("btn_test");
+const display = document.getElementById("display");
 
 //-- Acceder a la API de node para obtener la info
 //-- Sólo es posible si nos han dado permisos desde
 //-- el proceso princpal
-info1.textContent = process.arch;
-info2.textContent = process.platform;
-info3.textContent = process.cwd();
-info4.textContent = process.versions.node;
-info5.textContent = process.versions.electron;
-info6.textContent = process.versions.chrome;
+//-- Versión de Node
+info1.textContent = process.versions.node;
+//-- Versión de Chrome
+info2.textContent = process.versions.chrome;
+//-- Versión electron
+info3.textContent = process.versions.electron;
 
-// -- Cuando apretamos el botón enviamos a todos los usuarios del chat un mensaje
+//-- Inicializar contador usuarios
+usuarios.innerHTML = 0;
+
 btn_test.onclick = () => {
-    console.log("Botón apretado!");
-    electron.ipcRenderer.invoke('test', "Hola desde el Home Chat Server!");
+    console.log("Botón ON!");
+    //-- Enviar mensaje al proceso principal
+    electron.ipcRenderer.invoke('test', "Este mensaje es de prueba!!");
 }
 
-// -- Recibir los usuarios conectados al chat
-electron.ipcRenderer.on('users', (event, message) => {
-    console.log("Recibido: " + message);
-    info8.textContent = message;
+//-- Mensaje recibido del proceso MAIN para la ip
+electron.ipcRenderer.on('ip', (event, msg) => {
+    console.log("Recibida Ip: " + msg);
+    info4.innerHTML = msg;
+    //-- Generar el codigo qr de la url
 });
 
-// -- Los usuarios del chat escriben algún mensaje
-electron.ipcRenderer.on('message', (event, message) => {
-    console.log("Recibido: " + message);
-    display.innerHTML += '<p class="messages">' + '> ' + message + '</p>';
+//-- Mensaje recibido del proceso MAIN para el numero de usuarios
+electron.ipcRenderer.on('usuarios', (event, msg) => {
+    console.log("Recibido numero de usuarios: " + msg);
+    usuarios.innerHTML = msg;
 });
 
-// -- Los usuarios del chat escriben algún mensaje
-electron.ipcRenderer.on('url', (event, message) => {
-    URL.innerHTML = '<a href="' + message + '">' + message + '</a>';
+//-- Mensaje recibido del proceso MAIN de los usuarios
+electron.ipcRenderer.on('msg', (event, msg) => {
+    console.log("Recibido numero de usuarios: " + msg);
+    display.innerHTML += msg + "<br>";
+    display.scrollTop = display.scrollHeight;
 });
