@@ -94,6 +94,7 @@ io.on('connection', function(socket){
         msg.value = "";
       }else{
         io.emit('msg', numero + ": " + msg);
+        win.webContents.send('print', numero + ": " + msg);
       }
  
     });
@@ -172,11 +173,11 @@ electron.app.on('ready', () => {
 
   //-- Esperar a recibir los mensajes de botón apretado (Test) del proceso de 
   //-- renderizado. Al recibirlos se escribe una cadena en la consola
-  electron.ipcMain.handle('test', (event, msg) => {
+  electron.ipcMain.handle('test', async(event, msg) => {
     console.log("-> Mensaje: " + msg);
     //-- Enviar mensaje de prueba
-    io.send(msg);
-    win.webContents.send('msg', msg);
+    io.emit('testRecived', msg);
+    win.webContents.send('msg', 'Este mensaje es de prueba!!');
 
   });
 

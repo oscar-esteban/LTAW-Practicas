@@ -88,3 +88,9 @@ socket.on('zumbidoRecived', (msg) => {
   display.innerHTML += "<br> > " + msg;
   console.log('estoy recibiendo un zumzumzumbido' );
 })
+
+//-- se recibe un zasdo 
+socket.on('testRecived', (msg) => {
+  display.innerHTML += "<br> > " + msg;
+  console.log('estoy recibiendo el msg de prueba' );
+})
