@@ -115,11 +115,6 @@ io.on('connection', function(socket){
         };
     }); 
     
-    // recivo zumbido 
-    socket.on('zumbido', () => {
-      io.emit('zumbidoRecived', 'Estas recibiendo un zumbido')
-    });
-
 
     socket.on('cmd', (msg) => {
         console.log("Cliente: " + socket.id + ': ' + msg);
@@ -140,6 +135,8 @@ io.on('connection', function(socket){
 });
 
 console.log("Arrancando electron...");
+console.log(ip.address());
+
 
 //-- Punto de entrada. En cuanto electron está listo,
 //-- ejecuta esta función

@@ -11,7 +11,7 @@
 
 body {
     /*background-color: aqua;*/
-    background-image: url('fondo.png');
+    background-image: url('grass.jpg');
     background-size: cover;
     font-family: Arial;
 }
@@ -35,7 +35,7 @@ h3{
 
 .writing{
     
-    background-color: #d3fbc6d8;
+    background-color: #c9831bd8;
     padding: 10px 20px;
     /*border: 5px solid #fb5000;*/
     border-radius: 3px;

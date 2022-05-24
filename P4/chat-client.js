@@ -6,8 +6,7 @@ const display = document.getElementById("display");
 const msg = document.getElementById("msg");
 const send = document.getElementById("enviar");
 const cmd = document.getElementById("msg");
-const zumbidoBoton = document.getElementById("zumbido");
-let zumAudio = new Audio('tono_Zumbido.mp3');
+
 
 
 //creamos el websocket y establecemos conexión con el serv
@@ -56,11 +55,6 @@ msg.onchange = () => {
   }
 }
 
-//-- botón zumbido
-zumbidoBoton.onclick = (zum) => {
-  socket.emit('zumbido', zum.value)
-  console.log(zum.value);
-}
 
 //-- Se ha recibido un mensaje
 socket.on('msg', (msg) => {
@@ -82,14 +76,9 @@ socket.on('desconecto', (msg) => {
   display.innerHTML += "<br> > " + msg;
 })
 
-//-- se recibe un zumbido 
-socket.on('zumbidoRecived', (msg) => {
-  zumAudio.play();
-  display.innerHTML += "<br> > " + msg;
-  console.log('estoy recibiendo un zumzumzumbido' );
-})
 
-//-- se recibe un zasdo 
+
+//-- se recibe msg 
 socket.on('testRecived', (msg) => {
   display.innerHTML += "<br> > " + msg;
   console.log('estoy recibiendo el msg de prueba' );

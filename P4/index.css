@@ -1,5 +1,5 @@
 @font-face {
-    font-family: Arial Black;
+    font-family: Arial rgb(255, 255, 255);
     src: url(ariblk.ttf);
 }
 
@@ -10,7 +10,7 @@
 
 body {
     /*background-color: aqua;*/
-    background-image: url('fondoE.jpg');
+    background-image: url('cielo.jpg');
     background-size: contain;
     font-family: Arial;
 }
@@ -24,7 +24,7 @@ h1{
     float:left;
     width: 40%;
     padding: 15px;
-    background-color: #d3fbc6d8;
+    background-color: #f3f573d8;
     border: 2px solid #000000;
     height: 700px;
     overflow: auto;
@@ -37,7 +37,7 @@ h1{
     float:right;
     width: 40%;        
     padding: 15px;
-    background-color: #d3fbc6d8;
+    background-color: #f3f573d8;
     border: 2px solid #000000;
     height: 700px;
     overflow: auto;

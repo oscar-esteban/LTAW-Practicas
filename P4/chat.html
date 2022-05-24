@@ -8,7 +8,6 @@
         <title>CHAT</title>
         <!-- meto la hoja de estilo-->
         <link rel="stylesheet" href="chat.css">
-        <link rel="icon" href="icono.png">
         <!-- Cargar la biblioteca Socket.IO. Nos la debe entregar el servidor -->
         <script src="/socket.io/socket.io.js"></script>
         <!-- Cliente que usa los Sockets.io-->
@@ -18,12 +17,12 @@
 
     <body>
         <div class="cabecera">
-            <h1>WINDOWS LIVE!</h1>
+            <h1>Chat p4 LTAW</h1>
           </div>
           <div class="centro">
             <div class="chat">
-              <h3>MESSENGER</h3>
-              <p id="wellcome">Bienvenido al Chat Windows Live Messenger</p>
+              <h3>INTERFAZ</h3>
+              <p id="wellcome">Bienvenido al Chat</p>
               <p id="display"></p>
             </div>
             <div class="writing">
@@ -33,10 +32,7 @@
                   <th><input type="text" size="80" style="height:30px" id="msg" autocomplete="off" /></th>
                   <th><button type="button" id="enviar">ENVIAR</button></th>
                 </tr>
-                <tr>
-                  
-                  <th><button type="button" id="zumbido">ENVIAR ZUMBIDO</button></th>
-                </tr>
+                
                 
             </div>
           </div>
